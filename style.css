@@ -1,5 +1,4 @@
 html, body {
-    /* touch-action: manipulation; を削除 */
     -webkit-overflow-scrolling: none; 
     overscroll-behavior: none; 
     height: 100%;
@@ -13,147 +12,84 @@ body {
     min-height: 100vh;
     margin: 0; 
     background-color: #333;
-    /* 🌟 修正: フォントをゲーム/デジタル風に変更 */
     font-family: 'Consolas', 'Courier New', monospace; 
     color: #fff;
-    padding: 20px 0;
     flex-direction: column; 
     box-sizing: border-box; 
-    
-    max-width: 100vw; 
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
-/* 🌟 修正: メインレイアウトコンテナ (中央ボードと左右パネル) */
 .main-layout-container {
     display: flex;
-    gap: 30px; /* ボードとパネルの間隔 */
+    gap: 25px;
     border: 5px solid #1a1a1a;
     background-color: #444;
     padding: 20px;
     border-radius: 12px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    align-items: flex-start; /* 上端揃え */
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+    align-items: flex-start;
 }
 
-/* 左右パネルの共通スタイル */
 .side-panel {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    padding: 0;
-    /* 🌟 修正: パネルの固定幅を1.5倍に拡大 (150px -> 225px) */
-    width: 225px; 
+    align-items: center;
+    width: 190px; 
     gap: 15px;
 }
 
-/* 🌟 修正: H2, H3, スコアに立体感とネオン効果を追加 */
-.left-panel h2, .right-panel h3 {
+h2, h3 {
     margin: 0;
-    color: #fff; /* ベースカラーを白に統一 */
-    /* 立体感・ネオン効果 */
-    text-shadow: 
-        0 0 5px #00f0f0, /* ネオンの光 */
-        0 0 10px #00f0f0,
-        2px 2px 2px #000; /* 影による立体感 */
+    color: #fff;
+    text-shadow: 0 0 8px #00f0f0, 2px 2px 2px #000;
 }
 
-.left-panel {
-    align-items: center; /* HOLDを中央に寄せる */
-    padding-bottom: 20px;
-}
-.right-panel {
-    align-items: center;
-    justify-content: flex-start; /* 上側に寄せる */
-}
-
-
-/* ゲームボードの枠 */
 #tetris-canvas {
     border: 3px solid #000;
     background-color: #111;
-    display: block; 
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
-    /* 🌟 修正: heightを新しいブロックサイズ(30)に合わせて固定 (24行*30px = 720px) */
-    height: 720px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
 }
 
-
-/* Hold スロット */
-.hold-slot {
-    text-align: center;
-}
-
-#hold-piece-canvas {
-    border: 1px solid #777; 
+#hold-piece-canvas, .next-canvas {
+    border: 2px solid #555;
     background-color: #222;
-    margin-bottom: 0; 
-    /* 🌟 修正: HOLDキャンバスCSSサイズを1.5倍に拡大 (120px -> 180px) */
-    width: 180px; 
-    height: 180px;
+    border-radius: 6px;
 }
 
-/* 🌟 修正: NEXTピースコンテナ (5つを縦に) */
 .next-pieces-container {
     display: flex;
     flex-direction: column;
-    gap: 5px; /* Nextピース間の間隔 */
-    align-items: center;
+    gap: 6px;
 }
 
-/* 🌟 修正: 複数の NEXT ピースのサイズ */
 .next-canvas {
-    border: 1px solid #777; 
-    background-color: #222;
-    /* 🌟 修正: NEXTキャンバスCSSサイズを1.5倍に拡大 (60px -> 90px) */
-    width: 90px; 
-    height: 90px; 
+    width: 70px; 
+    height: 70px;
 }
 
-
-/* スコア/レベル表示 */
 .score-status p {
-    margin: 0;
-    /* 🌟 修正: フォントサイズも微調整 (1.3em -> 1.8em) */
-    font-size: 1.8em; 
+    font-size: 1.4em; 
     font-weight: bold;
-    color: #FFD700; /* 🌟 修正: ゴールドっぽい色 */
-    text-shadow: 1px 1px 0 #000; /* 🌟 修正 */
+    color: #FFD700;
+    margin: 10px 0;
+    text-shadow: 1px 1px 2px #000;
 }
 
-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #00f0f0;
-    color: #111;
-    border: none;
-    border-radius: 5px;
+#ren-display {
+    font-size: 1.6em;
+    color: #00f0f0;
     font-weight: bold;
-    transition: background-color 0.2s;
+    opacity: 0;
+    transition: opacity 0.2s;
+    height: 1.2em;
 }
 
-button:hover {
-    background-color: #00cccc;
-}
-
-/* PC向けの操作説明 */
 .controls {
-    margin-top: 20px;
     padding: 10px;
     border: 1px dashed #777;
-    border-radius: 5px;
-    font-size: 0.8em; 
-    display: block;
-    /* 🌟 修正: 幅も1.5倍に調整 (130px -> 195px) */
-    width: 195px;
+    font-size: 0.75em; 
     color: #ccc;
-    text-shadow: 1px 1px 0 #000; /* 🌟 修正 */
-}
-
-/* モバイルボタンは引き続き非表示 */
-.mobile-controls {
-    display: none; 
+    line-height: 1.5;
 }
 
 #version-display {
@@ -161,13 +97,5 @@ button:hover {
     bottom: 10px;
     right: 15px;
     font-size: 0.8em;
-    color: rgba(255, 255, 255, 0.4);
-    font-family: 'Consolas', monospace;
-    pointer-events: none;
-    z-index: 100;
-}
-
-#ren-display {
-    transition: opacity 0.2s;
-    height: 1.6em; /* スペース確保 */
+    color: rgba(255, 255, 255, 0.3);
 }
